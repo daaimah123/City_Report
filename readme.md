@@ -19,7 +19,7 @@ The query results should return together in the same json for the user to view.
 
 "When a city inspector finds a new fire violation they want to know which contractors are working nearby and need to be warned about a potential danger."
 
-Endpoint accepts a Block identifier and a date.
+Endpoint accepts a (1) Block identifier and (2) a Date.
 
 The results should return a json with businesses that have permits on the searched block. Note to self: Need to identify what type of query is happening here (simple sql command, look in notes)
 
@@ -27,3 +27,15 @@ The results should return a json with businesses that have permits on the search
 Node.js, Express.js & PostgreSQL
 
 For help setting up you can use this ![article](https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8) as a guide.
+
+Make sure postgreSQL is working and follow instructions to create database.
+Create a package.json using `npm init`.
+Install express and node-postgress using `npm i express pg`.
+In your index.js require `express`, `bodyParser`, and set `app` and `port` variables.
+Test connection by setting get route to show test message json to page.
+Create a `pool` node-postgres module inside of a new queries.js file for the connections, so they don't have to be opened and closed per use. 
+Create a get all query to retrieve all data from one table.
+Export for query route access in index.js.
+
+Leave Off: 
+[Search for two queries merging into one json](https://www.google.com/search?q=js+turn+two+queries+into+one+json&rlz=1C5CHFA_enUS819US819&oq=js+turn+two+queries+into+one+json+&aqs=chrome..69i57j69i64l2.8372j0j4&sourceid=chrome&ie=UTF-8)

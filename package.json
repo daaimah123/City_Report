@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/daaimah123/City_Report/issues"
   },
-  "homepage": "https://github.com/daaimah123/City_Report#readme"
+  "homepage": "https://github.com/daaimah123/City_Report#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "pg": "^7.9.0"
+  }
 }
