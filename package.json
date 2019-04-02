@@ -1,0 +1,19 @@
+{
+  "name": "city_report",
+  "version": "1.0.0",
+  "description": "We're building a tool to help protect electricians from experiencing or creating fire hazards during their work in San Francisco.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daaimah123/City_Report.git"
+  },
+  "author": "Daaimah Tibrey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/daaimah123/City_Report/issues"
+  },
+  "homepage": "https://github.com/daaimah123/City_Report#readme"
+}

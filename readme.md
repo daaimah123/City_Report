@@ -32,3 +32,5 @@ The results should return a json with businesses that have permits on the search
 
 ##Tech Proposed
 Node.js, Express.js & PostgreSQL
+
+For help setting up you can use this ![article](https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8) as a guide:
