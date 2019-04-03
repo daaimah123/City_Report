@@ -1,0 +1,150 @@
+ Last login: Tue Apr  2 07:53:26 on ttys005
+/Applications/Postgres.app/Contents/Versions/11/bin/psql -p5432 "city_report"
+Tue Apr 02|07:53:32|Location: ~|Daaimah|$ /Applications/Postgres.app/Contents/Versions/11/bin/psql -p5432 "city_report"
+psql (11.2)
+Type "help" for help.
+
+city_report=# CREATE SCHEMA contractors_report;
+CREATE SCHEMA
+city_report=# \contractors_report
+Invalid command \contractors_report. Try \? for help.
+city_report=# CREATE TABLE contractors_report.permits(
+city_report(#   "Permit Number" TEXT,
+city_report(#   "Application Creation Date" TEXT,
+city_report(#   "Block" TEXT,
+city_report(#   "Lot" TEXT,
+city_report(#   "Street Number" TEXT,
+city_report(#   "Street Number Suffix" TEXT,
+city_report(#   "Street Name" TEXT,
+city_report(#   "Street Suffix" TEXT,
+city_report(#   "Unit" TEXT,
+city_report(#   "Unit Suffix" TEXT,
+city_report(#   "Description" TEXT,
+city_report(#   "Status" TEXT,
+city_report(#   "Filed Date" TEXT,
+city_report(#   "Issued Date" TEXT,
+city_report(#   "Completed Date" TEXT,
+city_report(#   "Permit Valuation" TEXT,
+city_report(#   "Neighborhoods - Analysis Boundaries" TEXT,
+city_report(#   "Supervisor District" TEXT,
+city_report(#   "Zipcode" TEXT,
+city_report(#   "Location" TEXT
+city_report(# );
+CREATE TABLE
+city_report=# CREATE TABLE contractors_report.contacts(
+city_report(#   "Permit Number" TEXT,
+city_report(#   "Contact Type" TEXT,
+city_report(#   "Company Name" TEXT,
+city_report(#   "Street Number" TEXT,
+city_report(#   "Street" TEXT,
+city_report(#   "Street Suffix" TEXT,
+city_report(#   "State" TEXT,
+city_report(#   "Zipcode" TEXT,
+city_report(#   "Phone" TEXT,
+city_report(#   "Phone2" TEXT
+city_report(# );
+CREATE TABLE
+city_report=# CREATE TABLE contractors_report.fire_violations(
+city_report(#   "Violation Id" TEXT,
+city_report(#   "Primary" TEXT,
+city_report(#   "Violation Number" TEXT,
+city_report(#   "Violation Date" TEXT,
+city_report(#   "Violation Item" TEXT,
+city_report(#   "Violation Item Description" TEXT,
+city_report(#   "Citation Number" TEXT,
+city_report(#   "Corrective Action" TEXT,
+city_report(#   "Inspection Number" TEXT,
+city_report(#   "Address" TEXT,
+city_report(#   "Zipcode" TEXT,
+city_report(#   "Battalion" TEXT,
+city_report(#   "Station Area" TEXT,
+city_report(#   "Fire Prevention District" TEXT,
+city_report(#   "Status" TEXT,
+city_report(#   "Close Date" TEXT,
+city_report(#   "Supervisor District" TEXT,
+city_report(#   "Neighborhood  District" TEXT,
+city_report(#   "Location" TEXT
+city_report(# );
+CREATE TABLE
+city_report=# .import ./Electrical_Permits.csv permits
+city_report-# .import ./Electrical_Permits_Contacts.csv contacts
+city_report-# .import ./Fire_Violations.csv fire_violations
+city_report-# import ./Electrical_Permits.csv contractors_report.permits        city_report-# COPY contractors_report.permits FROM '/Electrical_Permits_Contacts.csv' WITH FORMAT csv;
+ERROR:  syntax error at or near "."
+LINE 1: .import ./Electrical_Permits.csv permits
+        ^
+city_report=# COPY contractors_report.permits FROM '/Electrical_Permits_Contacts.csv' WITH FORMAT csv;
+ERROR:  syntax error at or near "FORMAT"
+LINE 1: ...mits FROM '/Electrical_Permits_Contacts.csv' WITH FORMAT csv...
+                                                             ^
+city_report=# COPY contractors_report.permits FROM '/Electrical_Permits_Contacts.csv' DELIMETERS csv;
+ERROR:  syntax error at or near "DELIMETERS"
+LINE 1: ...t.permits FROM '/Electrical_Permits_Contacts.csv' DELIMETERS...
+                                                             ^
+city_report=# COPY contractors_report.permits FROM '/Electrical_Permits_Contacts.csv' 
+city_report-# COPY contractors_report.permits FROM '/Electrical_Permits_Contacts.csv' DELIMETERS ',' csv;
+ERROR:  syntax error at or near "COPY"
+LINE 2: COPY contractors_report.permits FROM '/Electrical_Permits_Co...
+        ^
+city_report=# COPY contractors_report.permits FROM '/Electrical_Permits_Contacts.csv' WITH (FORMAT csv);                                                        ERROR:  could not open file "/Electrical_Permits_Contacts.csv" for reading: No such file or directory
+HINT:  COPY FROM instructs the PostgreSQL server process to read a file. You may want a client-side facility such as psql's \copy.
+city_report=# COPY contractors_report.permits FROM 'Electrical_Permits_Contacts.csv' WITH (FORMAT csv);
+ERROR:  could not open file "Electrical_Permits_Contacts.csv" for reading: No such file or directory
+HINT:  COPY FROM instructs the PostgreSQL server process to read a file. You may want a client-side facility such as psql's \copy.
+city_report=# city_report=# COPY contractors_report.permits FROM '/Users/codetl/Electrical_Permits_Contacts.csv' WITH (FORMAT csv);
+ERROR:  missing data for column "Description"
+CONTEXT:  COPY permits, line 1: "Permit Number,Contact Type,Company Name,Street Number,Street,Street Suffix,State,Zipcode,Phone,Phone..."
+city_report=# city_report=# COPY contractors_report.permits FROM '/Users/codetl/Electrical_Permits.csv' WITH (FORMAT csv);
+COPY 252826
+city_report=# COPY contractors_report.contacts FROM '/Users/codetl/Electrical_Permits.Contacts.csv' WITH (FORMAT csv);
+ERROR:  could not open file "/Users/codetl/Electrical_Permits.Contacts.csv" for reading: No such file or directory
+HINT:  COPY FROM instructs the PostgreSQL server process to read a file. You may want a client-side facility such as psql's \copy.
+city_report=# COPY contractors_report.contacts FROM '/Users/codetl/Electrical_Permits_Contacts.csv' WITH (FORMAT csv);
+COPY 239271
+city_report=# COPY contractors_report.fire_violations FROM '/Users/codetl/Fire_Violations.csv' WITH (FORMAT csv);
+COPY 22844
+city_report=# \dt
+Did not find any relations.
+city_report=# \d
+Did not find any relations.
+city_report=# \connect contractors_report
+FATAL:  database "contractors_report" does not exist
+Previous connection kept
+city_report=# \db
+       List of tablespaces
+    Name    |  Owner   | Location 
+------------+----------+----------
+ pg_default | postgres | 
+ pg_global  | postgres | 
+(2 rows)
+
+city_report=# \list
+                                     List of databases
+       Name       |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges   
+------------------+----------+----------+-------------+-------------+-----------------------
+ city_report      | codetl   | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ codetl           | codetl   | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ db_name          | codetl   | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ eventonicaroutes | codetl   | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ postgres         | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ random_db        | codetl   | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ template0        | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+                  |          |          |             |             | postgres=CTc/postgres
+ template1        | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+                  |          |          |             |             | postgres=CTc/postgres
+ test             | codetl   | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+(9 rows)
+
+city_report=# \dn
+        List of schemas
+        Name        |  Owner   
+--------------------+----------
+ contractors_report | codetl
+ public             | postgres
+(2 rows)
+
+city_report=# \dt
+Did not find any relations.
+city_report=# \contractors_report
+Invalid command \contractors_report. Try \? for help.
+city_report=# 
