@@ -1,3 +1,6 @@
+/* ========================= EXPRESS APP =================================
+ ========================================================================= */
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
@@ -13,8 +16,26 @@ app.get('/', (request, response) => {
 response.json({ info: "Test Message Testing" })
 })
 
-app.get('/contacts', db.getContacts)
-app.get('/contacts/:id', db.getContactsById)
+/* ===========================  POOL  =================================
+======================================================================= */
+const Pool = require('pg').Pool
+const pool = new Pool({
+  user: 'codetl',
+  host: 'localhost',
+  database: 'city_report',
+  password: 'password',
+  port: 5432,
+})
+/* =====================  ROUTES / QUERIES  ===========================
+======================================================================= */
+
+app.get('/contacts', async (req, res) =>{
+    const client = await pool.connect();
+    const contactsTable = await client.query('SELECT * FROM events WHERE id = $1', [req.params.id]); 
+    res.json(contactsTable.rows[0]);
+    client.release();
+})
+// app.get('/contacts/:id', db.getContactsById)
 // app.get('/contacts', async (req, res) =>{
 //     const client = await pool.connect();
 //     const contactsTable = await client.query('SELECT * FROM contacts');
@@ -23,7 +44,7 @@ app.get('/contacts/:id', db.getContactsById)
 //     client.release();
 // })
 
-
+//listening message
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)
 })

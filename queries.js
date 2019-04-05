@@ -1,11 +1,11 @@
-const Pool = require('pg').Pool
-const pool = new Pool({
-  user: 'codetl',
-  host: 'localhost',
-  database: 'city_report',
-  password: 'password',
-  port: 5432,
-})
+// const Pool = require('pg').Pool
+// const pool = new Pool({
+//   user: 'codetl',
+//   host: 'localhost',
+//   database: 'city_report',
+//   password: 'password',
+//   port: 5432,
+// })
 
 //in production FIXME: env not established
 // const pool = new Pool({
@@ -15,14 +15,24 @@ const pool = new Pool({
 //   });
 
 
-const getContacts = 
-async (req, res) =>{
-    const client = await pool.connect();
-    const contactsTable = await client.query('SELECT * FROM contractors_report.contacts');
-    res.json(contactsTable.rows);
-    client.release();
-    console.log('hello') ///testing for true connection
-}
+
+
+
+/* =============================================  Routes  ==============================================
+ these functions dont necessarily have to be on separate file, can be in get requests directly in index.js  
+ ======================================================================================================= */
+//get by id
+// const getContactById = 
+
+//get all
+// const getContacts = async (req, res) =>{
+//     const client = await pool.connect(); //make request with client inside the pool
+//     const contactsTable = await client.query('SELECT * FROM contractors_report.contacts LIMIT 10'); //query that runs to pull pg data
+//     res.json(contactsTable.rows); //the queried data as response in json form
+//     client.release();//release client back to pool
+//     console.log('hello') ///testing for true connection
+// }
+//this way below wasnt working for me, so tried above, research more
 // (request, response) => {
 //     pool.query('SELECT * FROM contacts ORDER BY "Permit Number" ASC', (error, results) => {
 //       if (error) {
@@ -31,19 +41,11 @@ async (req, res) =>{
 //       response.status(200).json(results.rows)
 //     })
 //   }
-
-
-const getContactById = async (req, res) =>{
-    const client = await pool.connect();
-    const contactsTable = await client.query('SELECT * FROM events WHERE id = $1', [req.params.id]); 
-    res.json(contactsTable.rows[0]); 
-    client.release();
-}
   
 
 
 
 
-module.exports = {
-    getContacts, getContactById
-}
+// module.exports = {getContacts
+//     // , getContactById
+// }
