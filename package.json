@@ -18,6 +18,7 @@
   "homepage": "https://github.com/daaimah123/City_Report#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "pg": "^7.9.0"
+    "pg": "^7.9.0",
+    "pg-promise": "^8.6.4"
   }
 }
